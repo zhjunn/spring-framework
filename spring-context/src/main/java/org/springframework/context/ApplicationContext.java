@@ -28,19 +28,22 @@ import org.springframework.lang.Nullable;
  * This is read-only while the application is running, but may be
  * reloaded if the implementation supports this.
  *
+ *
  * <p>An ApplicationContext provides:
  * <ul>
  * <li>Bean factory methods for accessing application components.
  * Inherited from {@link org.springframework.beans.factory.ListableBeanFactory}.
- * <li>The ability to load file resources in a generic fashion.
+ * <li>The ability 功能 to load file resources in a generic fashion 通用方式.
  * Inherited from the {@link org.springframework.core.io.ResourceLoader} interface.
  * <li>The ability to publish events to registered listeners.
+ * 发布事件到已注册的监听器的能力
  * Inherited from the {@link ApplicationEventPublisher} interface.
  * <li>The ability to resolve messages, supporting internationalization.
+ * 解析消息,支持国际化
  * Inherited from the {@link MessageSource} interface.
- * <li>Inheritance from a parent context. Definitions in a descendant context
- * will always take priority. This means, for example, that a single parent
- * context can be used by an entire web application, while each servlet has
+ * <li>Inheritance 继承 from a parent context. Definitions in a descendant context  子上下文
+ * will always take priority 高优先级. This means, for example, that a single parent
+ * context can be used by an entire 整个 web application, while each servlet has
  * its own child context that is independent of that of any other servlet.
  * </ul>
  *
@@ -48,6 +51,8 @@ import org.springframework.lang.Nullable;
  * lifecycle capabilities, ApplicationContext implementations detect and invoke
  * {@link ApplicationContextAware} beans as well as {@link ResourceLoaderAware},
  * {@link ApplicationEventPublisherAware} and {@link MessageSourceAware} beans.
+ * 实现ApplicationContextAware 可以注入ApplicationContext
+ *
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
