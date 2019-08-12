@@ -511,10 +511,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	// context加载核心方法
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
+			// 准备:
+			// 设置状态，初始化StandardEnvironment，校验 validateRequiredProperties
+			// 保存  pre-refresh ApplicationListeners
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
