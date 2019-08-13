@@ -522,37 +522,59 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// 生成并且刷新 DefaultListableBeanFactory
+			// 具体由子类实现
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			// 完善beanFactory
+			// 配置 类加载器
+			// 添加 一些默认BeanPostProcessors
+			// 注册一些默认的Bean
 			prepareBeanFactory(beanFactory);
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
+				// beanFactory 后置处理，由子context实现
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
+				// AbstractContext 对BeanFactory的后置处理
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
+				// 注册Bean的后置处理
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
+				// 初始化消息源,国际化
+				// default DelegatingMessageSource
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
+				// 初始化应用消息广播
+				// 默认 SimpleApplicationEventMulticaster
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// 子context实现的 refresh中的动作
 				onRefresh();
 
 				// Check for listener beans and register them.
+				// 注册监听器
+				// 并且广播 earlyApplicationEvents
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
+				// beanFactory初始化完成，实例化所有剩下的非懒加载的单例
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
+				// 结束refresh
+				// 清除resource缓存
+				// 初始化initLifecycleProcessor
+				// getLifecycleProcessor().onRefresh();
+				// 广播refreshed事件
 				finishRefresh();
 			}
 
@@ -575,6 +597,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			finally {
 				// Reset common introspection caches in Spring's core, since we
 				// might not ever need metadata for singleton beans anymore...
+				// 清除Spring保存的内省缓存
 				resetCommonCaches();
 			}
 		}
@@ -878,6 +901,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.freezeConfiguration();
 
 		// Instantiate all remaining (non-lazy-init) singletons.
+		// 初始化所有非懒加载的Bean对象
 		beanFactory.preInstantiateSingletons();
 	}
 
